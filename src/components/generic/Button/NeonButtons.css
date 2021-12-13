@@ -1,0 +1,66 @@
+.StartButton {
+    background-color: black;
+    border-radius: 30px;
+    box-shadow: 0 0 7px #39FF13, 0 0 10px #39FF13, 0 0 42px #39FF13;
+    text-shadow: 0 0 7px #39FF13, 0 0 10px #39FF13, 0 0 42px #39FF13,
+    0 0 82px #39FF13, 0 0 92px #39FF13, 0 0 102px #39FF13, 0 0 151px #39FF13;
+    color: white;
+    border: white;
+    cursor: pointer;
+    border: white;
+    margin: auto;
+}
+
+.ClearButton {
+    background-color: black;
+    border-radius: 30px;
+    box-shadow: 0 0 7px #FF0C12, 0 0 10px #FF0C12, 0 0 42px #FF0C12;
+    text-shadow: 0 0 7px #FF0C12, 0 0 10px #FF0C12, 0 0 42px #FF0C12,
+    0 0 82px #FF0C12, 0 0 92px #FF0C12, 0 0 102px #FF0C12, 0 0 151px #FF0C12;
+    color: white;
+    border: white;
+    cursor: pointer;
+    margin: auto;
+}
+
+.PauseButton {
+    background-color: black;
+    border-radius: 30px;
+    box-shadow: 0 0 7px #FF0C12, 0 0 10px #FF0C12, 0 0 42px #FF0C12;
+    text-shadow: 0 0 7px #FF0C12, 0 0 10px #FF0C12, 0 0 42px #FF0C12,
+    0 0 82px #FF0C12, 0 0 92px #FF0C12, 0 0 102px #FF0C12, 0 0 151px #FF0C12;
+    color: white;
+    border: white;
+    cursor: pointer;
+    border: white;
+    margin: auto;
+}
+
+.RestartButton {
+    background-color: black;
+    border-radius: 30px;
+    box-shadow: 0 0 7px #006AF9, 0 0 10px #006AF9, 0 0 42px #006AF9;
+    text-shadow: 0 0 7px #006AF9, 0 0 10px #006AF9, 0 0 42px #006AF9,
+    0 0 82px #006AF9, 0 0 92px #006AF9, 0 0 102px #006AF9, 0 0 151px #006AF9;
+    color: white;
+    border: white;
+    cursor: pointer;
+    border: white;
+    margin: auto;
+}
+
+.smallButton {
+    background-color: #fbe0ff;
+    border-radius: 30px;
+    box-shadow: 0 0 7px #f08cffaf, 0 0 10px #f08cff, 0 0 42px #e35ff7,
+    0 0 82px #e643ff, 0 0 92px #dd00ff83, 0 0 102px #dd00ff83, 0 0 151px #dd00ff83;
+    margin: 0px;
+    text-shadow: 0 0 7px #f08cffaf, 0 0 10px #f08cff, 0 0 42px #e35ff7,
+    0 0 82px #e643ff, 0 0 92px #dd00ff83, 0 0 102px #dd00ff83, 0 0 151px #dd00ff83;
+    color:#e643ff;
+    border: none;
+    cursor: pointer;
+    border: white;
+    font-size: auto;
+    text-align: center;
+}

@@ -1,0 +1,12 @@
+.display {
+  background-color: black;
+  border: white;
+  border-radius: 5px;
+  color:  white;
+  text-shadow: 0 0 10px #f08cffaf, 0 0 10px #f08cff, 0 0 42px #e35ff7,
+  0 0 82px #e643ff, 0 0 92px #dd00ff83, 0 0 102px #dd00ff83, 0 0 151px #7f009283;
+  border-width: 2px;
+  box-shadow: 0 0 7px #f08cffaf, 0 0 10px;
+  margin: 5px;
+}
+
