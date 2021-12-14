@@ -58,6 +58,7 @@ function App() {
 
   let countdownStateArray = {
     name: "countdown",
+    status: "in-queue",
     seconds,
     minutes,
     hours,
@@ -68,6 +69,7 @@ function App() {
 
   let tabataStateArray = {
     name: "tabata",
+    status: "in-queue",
     work,
     rest,
     initialWork,
@@ -78,6 +80,7 @@ function App() {
 
   let xyStateArray = {
     name: "XY",
+    status: "in-queue",
     totalSeconds,
     initialTime,
     round
@@ -90,7 +93,7 @@ function App() {
     if (tabata) {
       setDataToSend(tabataStateArray);
     }
-    if(XY) {
+    if(xy) {
       setDataToSend(xyStateArray);
     }
     return () => {};

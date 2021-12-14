@@ -6,15 +6,17 @@ import Incrementer from "../generic/Incrementer/Incrementer";
 import NeonParagraph from "../generic/Paragraph/NeonParagraph";
 import NeonButton from "../generic/Button/NeonButtons";
 import { TimerContext } from "../Context/TimersContext";
+import { QueueContext } from "../Context/QueueContext";
 
 const Countdown = (props) => {
   const { seconds, setSeconds } = useContext(TimerContext);
-  const { minutes, setMinutes } =  useContext(TimerContext);
-  const { hours, setHours } =  useContext(TimerContext);
+  const { minutes, setMinutes } = useContext(TimerContext);
+  const { hours, setHours } = useContext(TimerContext);
   const { totalSeconds, setTotalSeconds } = useContext(TimerContext);
-  const { initialTime, setInitialTime } =  useContext(TimerContext);
-  const {isActive, setIsActive} = useContext(TimerContext);
-  const {startCountdown, setstartCountdown} = useState(false);
+  const { initialTime, setInitialTime } = useContext(TimerContext);
+  const { isActive, setIsActive } = useContext(TimerContext);
+
+  const { startCountdown } = useContext(QueueContext);
 
   let timer = useRef(null);
 
@@ -42,14 +44,16 @@ const Countdown = (props) => {
     setTotalSeconds(convertTimerToSeconds());
   }, [seconds, minutes, hours]);
 
-  useEffect(() => {}, [startCountdown]);
+  useEffect(() => {
+    if (startCountdown) {
+      start();
+    }
+  }, [startCountdown]);
 
   const convertTimerToSeconds = () => {
     const totalSeconds = hours * 3600 + minutes * 60 + seconds;
     return totalSeconds;
   };
-
-  // Convert seconds into days, hours, minutes, and seconds for the countdown presentation
 
   const convertSecondsToTimer = (ConvertedSeconds) => {
     setHours(Math.floor(ConvertedSeconds / 3600));
@@ -59,116 +63,102 @@ const Countdown = (props) => {
   };
 
   const start = () => {
-    const initialSeconds = convertTimerToSeconds();
-    if (initialSeconds > 0) {
-      setstartCountdown(true);
-      setIsActive(true);
-      setInitialTime(initialSeconds);
-      setTotalSeconds(convertTimerToSeconds());
+    if (startCountdown) {
+      const initialSeconds = convertTimerToSeconds();
+      if (initialSeconds > 0) {
+        setIsActive(true);
+        setInitialTime(initialSeconds);
+        setTotalSeconds(convertTimerToSeconds());
+      }
     }
   };
 
   const stop = () => {
-    setstartCountdown(false);
     clearInterval(timer.current);
   };
 
   const restart = () => {
-    setstartCountdown(false);
     clearInterval(timer.current);
     convertSecondsToTimer(initialTime);
   };
 
   const clear = () => {
-    setstartCountdown(false);
     clearInterval(timer.current);
     convertSecondsToTimer(0);
   };
-
 
   return (
     // Convert all of the days, hours, minutes, and seconds into seconds so we can more easily process the data
 
     <>
-      
-        <Background centered="true" width="300px" padding="20px">
-          <FlexRow height="25%" centered="true">
-            <NeonParagraph color="#00C0F9" size="24px">
-              Countdown
-            </NeonParagraph>
-          </FlexRow>
-          <FlexRow
-            height="25%"
-            padding="10px"
-            spaceEvenly="true"
-            centered="true"
-            width="100%"
-          >
-            <Incrementer
-              width="30px"
-              height="30px"
-              max="24"
-              min="0"
-              scale="h"
-              addZeros={2}
-              value={hours}
-              onChange={setHours}
-            />
-            <Incrementer
-              width="30px"
-              height="30px"
-              max="60"
-              min="0"
-              scale="m"
-              addZeros={2}
-              value={minutes}
-              onChange={setMinutes}
-            />
-            <Incrementer
-              width="30px"
-              height="30px"
-              max="60"
-              min="0"
-              scale="s"
-              addZeros={2}
-              value={seconds}
-              onChange={setSeconds}
-            />
-          </FlexRow>
-          <FlexRow
-            padding="10px"
-            width="100%"
-            spaceEvenly="true"
-            centered="true"
-          >
-            {startCountdown && (
-              <NeonButton
-                className="RestartButton"
-                onClick={restart}
-                width="20%"
-                height="50px"
-              >
-                &#8634;
-              </NeonButton>
-            )}
-          </FlexRow>
-          <FlexRow
-            padding="10px"
-            width="100%"
-            spaceEvenly="true"
-            centered="true"
-          >
+      {start()}
+      <Background centered="true" width="300px" padding="20px">
+        <FlexRow height="25%" centered="true">
+          <NeonParagraph color="#00C0F9" size="24px">
+            Countdown
+          </NeonParagraph>
+        </FlexRow>
+        <FlexRow
+          height="25%"
+          padding="10px"
+          spaceEvenly="true"
+          centered="true"
+          width="100%"
+        >
+          <Incrementer
+            width="30px"
+            height="30px"
+            max="24"
+            min="0"
+            scale="h"
+            addZeros={2}
+            value={hours}
+            onChange={setHours}
+          />
+          <Incrementer
+            width="30px"
+            height="30px"
+            max="60"
+            min="0"
+            scale="m"
+            addZeros={2}
+            value={minutes}
+            onChange={setMinutes}
+          />
+          <Incrementer
+            width="30px"
+            height="30px"
+            max="60"
+            min="0"
+            scale="s"
+            addZeros={2}
+            value={seconds}
+            onChange={setSeconds}
+          />
+        </FlexRow>
+        <FlexRow padding="10px" width="100%" spaceEvenly="true" centered="true">
+          {startCountdown && (
             <NeonButton
-              className="ClearButton"
-              onClick={clear}
-              width="100%"
+              className="RestartButton"
+              onClick={restart}
+              width="20%"
               height="50px"
             >
-              Clear
+              &#8634;
             </NeonButton>
-          </FlexRow>
-        </Background>
-      
+          )}
+        </FlexRow>
+        <FlexRow padding="10px" width="100%" spaceEvenly="true" centered="true">
+          <NeonButton
+            className="ClearButton"
+            onClick={clear}
+            width="100%"
+            height="50px"
+          >
+            Clear
+          </NeonButton>
+        </FlexRow>
+      </Background>
     </>
   );
 };

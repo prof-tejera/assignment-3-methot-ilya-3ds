@@ -1,4 +1,4 @@
-import react, { useContext, useEffect } from "react";
+import react, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import FlexColumn from "../components/generic/FlexDivs/FlexColumn";
 import FlexRow from "../components/generic/FlexDivs/FlexRow";
@@ -10,12 +10,18 @@ import { QueueProvider } from "../components/Context/QueueContext";
 
 const Home = () => {
   const { componentArray } = useContext(QueueContext);
+  const { startQueue } = useContext(QueueContext);
+  const [currArray, setCurrArray] = useState(componentArray);
+
+  useEffect(() => {
+    setCurrArray(componentArray)
+  },[componentArray]);
 
   return (
     <FlexColumn>
       <NeonParagraph> Timers In Queue</NeonParagraph>
       <FlexRow height="200px">
-        {componentArray.map((timer, i) => {
+        {currArray.map((timer, i) => {
           if (timer.name === "countdown") {
             return (
               <SmallTimerInfo
@@ -58,7 +64,7 @@ const Home = () => {
         </FlexColumn>
       </FlexRow>
       <FlexRow>
-        <NeonButton className="StartButton" width="20vw">
+        <NeonButton onClick={() => {startQueue()}} className="StartButton" width="20vw">
           Start
         </NeonButton>
       </FlexRow>
