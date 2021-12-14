@@ -18,28 +18,13 @@ const XY = (props) => {
 
   const [isActive, setIsActive] = useState(false);
 
-  const [setShowUI] = useState(false);
+  const [setstartCountdown] = useState(false);
 
   let timer = useRef(null);
-
-  
-  const {setMenu} = useContext(MenuContext);
-  const {setXY} = useContext(MenuContext);
-  const [completed, setCompleted] = useState(false);
-
-  const toggleMenu = () => {
-    setXY(false);
-    setMenu(true);
-  }
-
-  const toggleCompleted = () => {
-    setCompleted(false);
-  }
 
   useEffect(() => {
     timer.current = setInterval(() => {
       if (isActive) {
-        
         if (totalSeconds > 0) {
           const seconds = totalSeconds - 1;
           setTotalSeconds(seconds);
@@ -50,7 +35,6 @@ const XY = (props) => {
             setRound(currRound);
             convertSecondsToTimer(initialTime);
           } else {
-            setCompleted(true);
             stop();
           }
         }
@@ -60,6 +44,11 @@ const XY = (props) => {
       clearInterval(timer.current);
     };
   }, [isActive, totalSeconds]);
+
+  useEffect(() => {
+    setTotalSeconds(convertTimerToSeconds());
+
+  }, [minutes, seconds])
 
   // Convert all of the days, hours, minutes, and seconds into seconds so we can more easily process the data
 
@@ -71,13 +60,12 @@ const XY = (props) => {
   // Convert seconds into days, hours, minutes, and seconds for the countdown presentation
 
   const convertSecondsToTimer = (ConvertedSeconds) => {
-    setHours(Math.floor(ConvertedSeconds / 3600));
-    console.log("hours " + Math.floor(ConvertedSeconds / 3600))
-    const hoursRemainder = ConvertedSeconds % 3600;
-    setMinutes(Math.floor(hoursRemainder / 60));
-    console.log("minutes " + Math.floor(hoursRemainder / 60))
+  
+    const hoursRemainder = ConvertedSeconds % 60;
+    setMinutes(Math.floor(ConvertedSeconds / 60));
+    console.log("minutes " + Math.floor(hoursRemainder / 60));
     setSeconds(hoursRemainder % 60);
-    console.log("minutes " + hoursRemainder % 60)
+    console.log("minutes " + (hoursRemainder % 60));
   };
 
   // Buttons Start
@@ -86,7 +74,7 @@ const XY = (props) => {
   const start = () => {
     const initialSeconds = convertTimerToSeconds();
     setInitialTime(initialSeconds);
-    setTotalSeconds(convertTimerToSeconds())
+    setTotalSeconds(convertTimerToSeconds());
     setIsActive(true);
   };
 
@@ -106,7 +94,7 @@ const XY = (props) => {
 
   return (
     <>
-      {!completed && <Background centered="true" width="300px" padding="20px">
+      <Background centered="true" width="300px" padding="20px">
         <FlexRow height="25%" centered="true">
           <NeonParagraph color="#00C0F9" size="24px">
             XY
@@ -114,23 +102,20 @@ const XY = (props) => {
         </FlexRow>
         <FlexRow height="25%" padding="10px" width="100%">
           <NeonParagraph color="#00C0F9">Round</NeonParagraph>
-          <Incrementer value={round} onChange={setRound} width="30px" height="30px" max="10" min="1" />
+          <Incrementer
+            value={round}
+            onChange={setRound}
+            width="30px"
+            height="30px"
+            max="10"
+            min="1"
+          />
         </FlexRow>
         <FlexRow height="25%" padding="10px" spaceEvenly="true" width="100%">
           <Incrementer
-          value={hours}
-          onChange={setHours}
-            width="30px"
-            height="30px"
-            max="24"
-            min="0"
-            scale="h"
-            addZeros="2"
-          />
-          <Incrementer
-          value={minutes}
-          onChange={setMinutes}
-            width="30px"
+            value={minutes}
+            onChange={setMinutes}
+            width="50px"
             height="30px"
             max="60"
             min="0"
@@ -138,9 +123,9 @@ const XY = (props) => {
             addZeros="2"
           />
           <Incrementer
-          value={seconds}
-          onChange={setSeconds}
-            width="30px"
+            value={seconds}
+            onChange={setSeconds}
+            width="50px"
             height="30px"
             max="60"
             min="0"
@@ -148,64 +133,7 @@ const XY = (props) => {
             addZeros="2"
           />
         </FlexRow>
-        <FlexRow height="25%" padding="10px" width="100%" centered="true">
-          <NeonButton
-            className="StartButton"
-            onClick={start}
-            width="30%"
-            height="50px"
-          >
-            Start
-          </NeonButton>
-          <NeonButton
-            className="PauseButton"
-            onClick={stop}
-            width="30%"
-            height="50px"
-          >
-            Pause
-          </NeonButton>
-          <NeonButton
-            className="RestartButton"
-            onClick={restart}
-            width="20%"
-            height="50px"
-          >
-            &#8634;
-          </NeonButton>
-        </FlexRow>
-        <FlexRow
-          height="25%"
-          padding="10px"
-          width="100%"
-          spaceEvenly="true"
-          centered="true"
-        >
-          <NeonButton
-            className="ClearButton"
-            onClick={clear}
-            width="100%"
-            height="50px"
-          >
-            Clear
-          </NeonButton>
-        </FlexRow>
-      </Background>}
-      {completed && (
-        <Background centered="true" width="300px" padding="20px">
-          <NeonParagraph>Completed</NeonParagraph>
-          <FlexRow>
-            <FlexColumn>
-              <NeonParagraph>Return To Menu</NeonParagraph>
-              <NeonButton onClick={toggleMenu}>O</NeonButton>
-            </FlexColumn>
-            <FlexColumn>
-              <NeonParagraph>Set New XY Timer</NeonParagraph>
-              <NeonButton onClick={toggleCompleted}>O</NeonButton>
-            </FlexColumn>
-          </FlexRow>
-        </Background>
-      )}
+      </Background>
     </>
   );
 };

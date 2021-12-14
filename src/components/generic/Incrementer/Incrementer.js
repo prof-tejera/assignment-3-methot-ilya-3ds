@@ -76,7 +76,8 @@ const Incrementer = (props) => {
               }
             }}
             className="display"
-          ></input>
+          ></input> 
+          
         </FlexRow>
         <FlexRow width="auto" height="auto" spaceEvenly="true" centered="true">
           <Button

@@ -16,7 +16,7 @@ const Button = props => {
             height: props.height,
             cursor: props.disabled && "auto",
             borderRadius: "30px",
-            fontSize: "auto"
+            fontSize: props.fontSize
           }
         }
         className={props.className}
@@ -39,15 +39,17 @@ Button.propTypes = {
   className: PropTypes.string,
   disabled: PropTypes.bool,
   selected: PropTypes.bool,
+  fontSize: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
 }
 
 Button.defaultProps = {
-  width: "50px",
-  height: "50px",
+  width: "50",
+  height: "50",
   className: "Default-button",
   disabled: false,
   selected: false,
-  color: "black"
+  color: "black",
+  fontSize: "auto"
 }
 
 export default Button;

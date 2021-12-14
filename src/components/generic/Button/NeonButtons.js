@@ -14,6 +14,7 @@ const NeonButton = props => {
             height: props.height,
             cursor: props.disabled && "auto",
             borderRadius: "30px",
+            fontSize: props.fontSize
           }
         }
         className={props.className}

@@ -6,32 +6,15 @@ import Incrementer from "../generic/Incrementer/Incrementer";
 import NeonParagraph from "../generic/Paragraph/NeonParagraph";
 import NeonButton from "../generic/Button/NeonButtons";
 import { TimerContext } from "../Context/TimersContext";
-import FlexColumn from "../generic/FlexDivs/FlexColumn";
-import { MenuContext } from "../Context/MenuContext";
+
 const Countdown = (props) => {
   const { seconds, setSeconds } = useContext(TimerContext);
-  const { minutes, setMinutes } = useContext(TimerContext);
-  const { hours, setHours } = useContext(TimerContext);
+  const { minutes, setMinutes } =  useContext(TimerContext);
+  const { hours, setHours } =  useContext(TimerContext);
   const { totalSeconds, setTotalSeconds } = useContext(TimerContext);
-  const { initialTime, setInitialTime } = useContext(TimerContext);
-  const {setTimerID } = useContext(TimerContext);
-
-  const [isActive, setIsActive] = useState(false);
-
-  const [showUI, setShowUI] = useState(false);
-
-  const {setMenu} = useContext(MenuContext);
-  const {setCountdown} = useContext(MenuContext);
-  const [completed, setCompleted] = useState(false);
-
-  const toggleMenu = () => {
-    setCountdown(false);
-    setMenu(true);
-  }
-
-  const toggleCompleted = () => {
-    setCompleted(false);
-  }
+  const { initialTime, setInitialTime } =  useContext(TimerContext);
+  const {isActive, setIsActive} = useContext(TimerContext);
+  const {startCountdown, setstartCountdown} = useState(false);
 
   let timer = useRef(null);
 
@@ -45,20 +28,21 @@ const Countdown = (props) => {
 
           console.log(totalSeconds);
         } else {
-          setShowUI(false);
-          setCompleted(true);
           clearInterval(timer.current);
         }
       }
     }, 1000);
-    setTimerID(timer);
 
     return () => {
       clearInterval(timer.current);
     };
   }, [isActive, totalSeconds]);
 
-  useEffect(() => {}, [showUI]);
+  useEffect(() => {
+    setTotalSeconds(convertTimerToSeconds());
+  }, [seconds, minutes, hours]);
+
+  useEffect(() => {}, [startCountdown]);
 
   const convertTimerToSeconds = () => {
     const totalSeconds = hours * 3600 + minutes * 60 + seconds;
@@ -77,7 +61,7 @@ const Countdown = (props) => {
   const start = () => {
     const initialSeconds = convertTimerToSeconds();
     if (initialSeconds > 0) {
-      setShowUI(true);
+      setstartCountdown(true);
       setIsActive(true);
       setInitialTime(initialSeconds);
       setTotalSeconds(convertTimerToSeconds());
@@ -85,37 +69,28 @@ const Countdown = (props) => {
   };
 
   const stop = () => {
-    setShowUI(false);
+    setstartCountdown(false);
     clearInterval(timer.current);
   };
 
   const restart = () => {
-    setShowUI(false);
+    setstartCountdown(false);
     clearInterval(timer.current);
     convertSecondsToTimer(initialTime);
   };
 
   const clear = () => {
-    setShowUI(false);
+    setstartCountdown(false);
     clearInterval(timer.current);
     convertSecondsToTimer(0);
   };
 
-  // Turn off setInterval when reloading
-
-  // this.componentWillUnmount = () => {
-  //   clearInterval(this.state.timerID);
-  // }
-
-  // this.componentDidMount = () => {
-  //   clearInterval(this.state.timerID);
-  // }
 
   return (
     // Convert all of the days, hours, minutes, and seconds into seconds so we can more easily process the data
 
     <>
-      {!completed && (
+      
         <Background centered="true" width="300px" padding="20px">
           <FlexRow height="25%" centered="true">
             <NeonParagraph color="#00C0F9" size="24px">
@@ -166,27 +141,7 @@ const Countdown = (props) => {
             spaceEvenly="true"
             centered="true"
           >
-            {!showUI && (
-              <NeonButton
-                className="StartButton"
-                onClick={start}
-                width="100%"
-                height="50px"
-              >
-                Start
-              </NeonButton>
-            )}
-            {showUI && (
-              <NeonButton
-                className="PauseButton"
-                onClick={stop}
-                width="30%"
-                height="50px"
-              >
-                Pause
-              </NeonButton>
-            )}
-            {showUI && (
+            {startCountdown && (
               <NeonButton
                 className="RestartButton"
                 onClick={restart}
@@ -213,22 +168,7 @@ const Countdown = (props) => {
             </NeonButton>
           </FlexRow>
         </Background>
-      )}
-      {completed && (
-        <Background centered="true" width="300px" padding="20px">
-          <NeonParagraph>Completed</NeonParagraph>
-          <FlexRow>
-            <FlexColumn>
-              <NeonParagraph>Return To Menu</NeonParagraph>
-              <NeonButton onClick={toggleMenu}>O</NeonButton>
-            </FlexColumn>
-            <FlexColumn>
-              <NeonParagraph>Set New Countdown</NeonParagraph>
-              <NeonButton onClick={toggleCompleted}>O</NeonButton>
-            </FlexColumn>
-          </FlexRow>
-        </Background>
-      )}
+      
     </>
   );
 };

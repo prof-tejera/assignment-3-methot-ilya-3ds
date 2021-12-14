@@ -23,7 +23,7 @@ const Background = (props) => {
           centered="true"
           spaceAround="true"
         >
-          <div class="container">
+          <div className="container">
             <FlexColumn
               padding="10px"
               width="100%"
@@ -32,20 +32,20 @@ const Background = (props) => {
             >
               {props.children}
             </FlexColumn>
-            <div class="frame"></div>
-            <div class="frame"></div>
-            <div class="frame"></div>
-            <div class="frame"></div>
-            <div class="frame"></div>
-            <div class="frame"></div>
-            <div class="frame"></div>
-            <div class="frame"></div>
-            <div class="frame"></div>
-            <div class="frame"></div>
-            <div class="frame"></div>
-            <div class="frame"></div>
-            <div class="frame"></div>
-            <div class="frame"></div>
+            <div className="frame"></div>
+            <div className="frame"></div>
+            <div className="frame"></div>
+            <div className="frame"></div>
+            <div className="frame"></div>
+            <div className="frame"></div>
+            <div className="frame"></div>
+            <div className="frame"></div>
+            <div className="frame"></div>
+            <div className="frame"></div>
+            <div className="frame"></div>
+            <div className="frame"></div>
+            <div className="frame"></div>
+            <div className="frame"></div>
           </div>
         </FlexColumn>
       </div>

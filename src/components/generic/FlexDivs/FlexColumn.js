@@ -61,7 +61,7 @@ FlexColumn.defaultProps = {
   color: "none",
   width: "auto",
   height: "auto",
-  margin: "0px;",
+  margin: "0px",
   padding: "0px",
   spaceEvenly: "false"
 }
