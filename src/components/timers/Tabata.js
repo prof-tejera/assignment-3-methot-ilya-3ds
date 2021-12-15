@@ -16,6 +16,7 @@ const Tabata = (props) => {
   const { initialRound, setInitialRound} = useContext(TimerContext);
   const { round, setRound } = useContext(TimerContext);
   const { roundType, setRoundType } = useContext(TimerContext);
+  const { totalSeconds, setTotalSeconds} = useContext(TimerContext);
 
   const [isActive, setIsActive] = useState(false);
 
@@ -28,19 +29,20 @@ const Tabata = (props) => {
           setRoundType("work");
           const workSeconds = work - 1;
           setWork(workSeconds);
+          setTotalSeconds(workSeconds);
         } else if (rest > 0) {
           setRoundType("rest");
           const restSeconds = rest - 1;
           setRest(restSeconds);
+          setTotalSeconds(restSeconds);
         } else if (round > 1) {
           setRoundType("work");
           const currRound = round - 1;
           setRound(currRound);
           setWork(initialWork);
           setRest(initialRest);
-        } else {
-          stop();
-        }
+          setTotalSeconds(work);
+        } 
       }
     }, 1000);
 
@@ -49,32 +51,16 @@ const Tabata = (props) => {
     };
   }, [isActive, round, rest, work]);
 
-
-  const start = () => {
-    setInitialRound(round)
-    setInitialWork(work);
-    setInitialRest(rest);
-    setIsActive(true);
-  };
-
-  const stop = () => {
-    clearInterval(timer.current);
-    setIsActive(false);
-  };
-
-  const restart = () => {
-    clearInterval(timer.current);
-    setWork(initialWork);
-    setRest(initialRest);
-    setIsActive(false);
-  };
-
-  const clear = () => {
-    clearInterval(timer.current);
-    setWork(0);
-    setRest(0);
-    setIsActive(false);
-  };
+  useEffect(() => {
+    setRound(round);
+    setInitialRound(round);
+    if(work > 0) {
+      setTotalSeconds(work);
+    }
+    else{
+      setTotalSeconds(rest);
+    }
+  },[work, rest, round])
 
   return (
     <>

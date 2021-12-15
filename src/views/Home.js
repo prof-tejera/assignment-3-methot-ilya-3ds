@@ -24,7 +24,7 @@ const Home = () => {
         setQueueActive(false);
         setCurrArray(componentArray);
       }
-  }, [useArrayQueue]);
+  }, [useArrayQueue, JSON.stringify(queueArray), JSON.stringify(componentArray)]);
 
   useEffect(() => {
     if(useArrayQueue) {
@@ -43,6 +43,7 @@ const Home = () => {
                 name={timer.name}
                 time={timer.totalSeconds}
                 index={i}
+                status={timer.status}
               ></SmallTimerInfo>
             );
           }
@@ -50,11 +51,12 @@ const Home = () => {
             return (
               <SmallTimerInfo
                 name={timer.name}
-                time={timer.work}
-                currRound="0"
-                totalRound={timer.round}
-                currState={"Work"}
+                time={timer.totalSeconds}
+                currRound={(timer.initialRound - timer.round + 1)}
+                totalRound={timer.initialRound}
+                currState={timer.roundType}
                 index={i}
+                status={timer.status}
               ></SmallTimerInfo>
             );
           }
@@ -63,9 +65,21 @@ const Home = () => {
               <SmallTimerInfo
                 name={timer.name}
                 time={timer.totalSeconds}
-                currRound="0"
-                totalRound={timer.round}
+                currRound={(timer.initialRound - timer.round + 1)}
+                totalRound={timer.initialRound}
                 index={i}
+                status={timer.status}
+              ></SmallTimerInfo>
+            );
+          }
+          if (timer.name === "stopwatch") {
+            return (
+              <SmallTimerInfo
+                name={timer.name}
+                time={timer.totalSeconds}
+                initialTime = {timer.initialTime}
+                index={i}
+                status={timer.status}
               ></SmallTimerInfo>
             );
           }
@@ -86,16 +100,28 @@ const Home = () => {
           }}
           className="StartButton"
           width="20vw"
+          margin="10px"
         >
           Start
         </NeonButton>}
         {useArrayQueue && <NeonButton
           onClick={() => {
             stopTimers();
+          }}
+          className="PauseButton"
+          width="20vw"
+          margin="10px"
+        >
+          Pause
+        </NeonButton>}
+        {useArrayQueue && <NeonButton
+          onClick={() => {
+            stopTimers();
             setUseArrayQueue(false);
           }}
-          className="StopButton"
+          className="ClearButton"
           width="20vw"
+          margin="10px"
         >
           Stop
         </NeonButton>}

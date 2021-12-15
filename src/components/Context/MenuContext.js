@@ -21,7 +21,7 @@ export const MenuProvider = (props) => {
         menu,
         setMenu,
         countdown,
-        setCountdown
+        setCountdown,
       }}
     >
       {props.children}

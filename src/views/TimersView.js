@@ -54,6 +54,11 @@ function App() {
     setMenu(false);
     //setNonMenu(true);
   };
+  const toggleStopwatch = () => {
+    setStopwatch(!stopwatch);
+    setMenu(false);
+    //setNonMenu(true);
+  };
 
   const returnToMenu = () => {
     setMenu(true);
@@ -66,6 +71,17 @@ function App() {
 
   let countdownStateArray = {
     name: "countdown",
+    id: 0,
+    status: "in-queue",
+    seconds,
+    minutes,
+    hours,
+    totalSeconds,
+    isActive,
+  };
+
+  let stopwatchStateArray = {
+    name: "stopwatch",
     id: 0,
     status: "in-queue",
     seconds,
@@ -87,6 +103,7 @@ function App() {
     initialRound,
     round,
     roundType,
+    totalSeconds
   };
 
   let xyStateArray = {
@@ -94,7 +111,6 @@ function App() {
     id: 0,
     status: "in-queue",
     totalSeconds,
-    initialTime,
     round,
     initialRound,
   };
@@ -109,8 +125,11 @@ function App() {
     if (xy) {
       setDataToSend(xyStateArray);
     }
+    if (stopwatch) {
+      setDataToSend(stopwatchStateArray);
+    }
     return () => {};
-  }, [totalSeconds, round, work, rest]);
+  }, [totalSeconds, round, work, rest, initialTime]);
 
   return (
     <>
@@ -121,9 +140,13 @@ function App() {
               <NeonParagraph color="red">Choose Timer</NeonParagraph>
               <FlexColumn width="100%" centered="true">
                 <FlexRow width="100%" height="40%">
-                  <FlexColumn>
+                <FlexColumn>
                     <NeonParagraph color="white">XY</NeonParagraph>
                     <NeonButton onClick={toggleXY}>O</NeonButton>
+                  </FlexColumn>
+                  <FlexColumn>
+                    <NeonParagraph color="white">Stopwatch</NeonParagraph>
+                    <NeonButton onClick={toggleStopwatch}>O</NeonButton>
                   </FlexColumn>
                 </FlexRow>
                 <FlexRow width="100%" height="40% ">

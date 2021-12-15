@@ -12,7 +12,8 @@ const NeonParagraph = props => {
         width: props.width,
         margin: "0px",
         padding: props.padding,
-        boxSizing: "border-box"
+        boxSizing: "border-box",
+        textAlign:"center"
     }}>{props.children}</p>;
   }
 

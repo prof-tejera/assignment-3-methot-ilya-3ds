@@ -42,7 +42,7 @@ const Countdown = (props) => {
 
   useEffect(() => {
     setTotalSeconds(convertTimerToSeconds());
-  }, [seconds, minutes, hours]);
+  }, [seconds, minutes]);
 
   useEffect(() => {
     if (startCountdown) {
@@ -51,7 +51,7 @@ const Countdown = (props) => {
   }, [startCountdown]);
 
   const convertTimerToSeconds = () => {
-    const totalSeconds = hours * 3600 + minutes * 60 + seconds;
+    const totalSeconds = minutes * 60 + seconds;
     return totalSeconds;
   };
 
@@ -105,16 +105,6 @@ const Countdown = (props) => {
           centered="true"
           width="100%"
         >
-          <Incrementer
-            width="30px"
-            height="30px"
-            max="24"
-            min="0"
-            scale="h"
-            addZeros={2}
-            value={hours}
-            onChange={setHours}
-          />
           <Incrementer
             width="30px"
             height="30px"

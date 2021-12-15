@@ -46,9 +46,11 @@ const XY = (props) => {
   }, [isActive, totalSeconds]);
 
   useEffect(() => {
+    setInitialRound(round);
+    setRound(round);
     setTotalSeconds(convertTimerToSeconds());
 
-  }, [minutes, seconds])
+  }, [minutes, seconds, round])
 
   // Convert all of the days, hours, minutes, and seconds into seconds so we can more easily process the data
 
@@ -61,11 +63,8 @@ const XY = (props) => {
 
   const convertSecondsToTimer = (ConvertedSeconds) => {
   
-    const hoursRemainder = ConvertedSeconds % 60;
     setMinutes(Math.floor(ConvertedSeconds / 60));
-    console.log("minutes " + Math.floor(hoursRemainder / 60));
-    setSeconds(hoursRemainder % 60);
-    console.log("minutes " + (hoursRemainder % 60));
+    setSeconds(ConvertedSeconds % 60);
   };
 
   // Buttons Start
