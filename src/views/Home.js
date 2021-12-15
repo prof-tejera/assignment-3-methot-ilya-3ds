@@ -9,13 +9,28 @@ import SmallTimerInfo from "../components/timers/SmallTimerInfo.js";
 import { QueueProvider } from "../components/Context/QueueContext";
 
 const Home = () => {
-  const { componentArray } = useContext(QueueContext);
-  const { startQueue } = useContext(QueueContext);
+  const { componentArray, queueArray, setQueueArray, setQueueActive } = useContext(QueueContext);
+  const { startQueue, stopTimers } = useContext(QueueContext);
   const [currArray, setCurrArray] = useState(componentArray);
 
+  const [useArrayQueue, setUseArrayQueue] = useState(false);
+
   useEffect(() => {
-    setCurrArray(componentArray)
-  },[componentArray]);
+      if(useArrayQueue) {
+        setQueueActive(true);
+        setCurrArray(queueArray)
+      }
+      else {
+        setQueueActive(false);
+        setCurrArray(componentArray);
+      }
+  }, [useArrayQueue]);
+
+  useEffect(() => {
+    if(useArrayQueue) {
+      startQueue()
+    }
+}, [currArray]);
 
   return (
     <FlexColumn>
@@ -43,30 +58,47 @@ const Home = () => {
               ></SmallTimerInfo>
             );
           }
-          if(timer.name === "XY") {
+          if (timer.name === "XY") {
             return (
-                <SmallTimerInfo
-                  name={timer.name}
-                  time={timer.totalSeconds}
-                  currRound="0"
-                  totalRound={timer.round}
-                  index={i}
-                ></SmallTimerInfo>
-              );
+              <SmallTimerInfo
+                name={timer.name}
+                time={timer.totalSeconds}
+                currRound="0"
+                totalRound={timer.round}
+                index={i}
+              ></SmallTimerInfo>
+            );
           }
         })}
 
-        <FlexColumn>
+        {!useArrayQueue && <FlexColumn>
           <Link to="/add">
             <NeonButton>+</NeonButton>
           </Link>
           <NeonParagraph> Add Timer</NeonParagraph>
-        </FlexColumn>
+        </FlexColumn>}
       </FlexRow>
       <FlexRow>
-        <NeonButton onClick={() => {startQueue()}} className="StartButton" width="20vw">
+       {!useArrayQueue && <NeonButton
+          onClick={() => {
+            setQueueArray(JSON.parse(JSON.stringify(componentArray)));
+            setUseArrayQueue(true);
+          }}
+          className="StartButton"
+          width="20vw"
+        >
           Start
-        </NeonButton>
+        </NeonButton>}
+        {useArrayQueue && <NeonButton
+          onClick={() => {
+            stopTimers();
+            setUseArrayQueue(false);
+          }}
+          className="StopButton"
+          width="20vw"
+        >
+          Stop
+        </NeonButton>}
       </FlexRow>
     </FlexColumn>
   );

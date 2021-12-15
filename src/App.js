@@ -20,8 +20,8 @@ function App() {
     <Container>
       <TimerProvider>
         <MenuProvider>
-          <CountdownProvider>
-            <QueueProvider>
+          <QueueProvider>
+            <CountdownProvider>
               <Router>
                 <nav>
                   <ul>
@@ -45,8 +45,8 @@ function App() {
                   </Route>
                 </Switch>
               </Router>
-            </QueueProvider>
-          </CountdownProvider>
+            </CountdownProvider>
+          </QueueProvider>
         </MenuProvider>
       </TimerProvider>
     </Container>

@@ -14,7 +14,7 @@ const Countdown = (props) => {
   const { hours, setHours } = useContext(TimerContext);
   const { totalSeconds, setTotalSeconds } = useContext(TimerContext);
   const { initialTime, setInitialTime } = useContext(TimerContext);
-  const { isActive, setIsActive } = useContext(TimerContext);
+  const [ isActive, setIsActive ] = useState(false);
 
   const { startCountdown } = useContext(QueueContext);
 
@@ -136,28 +136,7 @@ const Countdown = (props) => {
             onChange={setSeconds}
           />
         </FlexRow>
-        <FlexRow padding="10px" width="100%" spaceEvenly="true" centered="true">
-          {startCountdown && (
-            <NeonButton
-              className="RestartButton"
-              onClick={restart}
-              width="20%"
-              height="50px"
-            >
-              &#8634;
-            </NeonButton>
-          )}
-        </FlexRow>
-        <FlexRow padding="10px" width="100%" spaceEvenly="true" centered="true">
-          <NeonButton
-            className="ClearButton"
-            onClick={clear}
-            width="100%"
-            height="50px"
-          >
-            Clear
-          </NeonButton>
-        </FlexRow>
+        
       </Background>
     </>
   );

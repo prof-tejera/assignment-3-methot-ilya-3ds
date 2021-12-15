@@ -15,10 +15,10 @@ const XY = (props) => {
   const { hours, setHours } = useContext(TimerContext);
   const { totalSeconds, setTotalSeconds } = useContext(TimerContext);
   const { initialTime, setInitialTime } = useContext(TimerContext);
+  const {initialRound, setInitialRound} = useContext(TimerContext);
 
   const [isActive, setIsActive] = useState(false);
 
-  const [setstartCountdown] = useState(false);
 
   let timer = useRef(null);
 
@@ -73,6 +73,7 @@ const XY = (props) => {
 
   const start = () => {
     const initialSeconds = convertTimerToSeconds();
+    setInitialRound(round);
     setInitialTime(initialSeconds);
     setTotalSeconds(convertTimerToSeconds());
     setIsActive(true);

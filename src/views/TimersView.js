@@ -25,9 +25,17 @@ function App() {
   const { seconds, minutes, hours, totalSeconds, initialTime, isActive } =
     useContext(TimerContext);
 
-  const {work, rest, initialWork, initialRest, initialRound, round} = useContext(TimerContext);
+  const {
+    work,
+    rest,
+    initialWork,
+    initialRest,
+    initialRound,
+    round,
+    roundType,
+  } = useContext(TimerContext);
 
-  const{setDefaultState} = useContext(TimerContext);
+  const { setDefaultState } = useContext(TimerContext);
 
   const [dataToSend, setDataToSend] = useState(undefined);
 
@@ -58,6 +66,7 @@ function App() {
 
   let countdownStateArray = {
     name: "countdown",
+    id: 0,
     status: "in-queue",
     seconds,
     minutes,
@@ -69,22 +78,26 @@ function App() {
 
   let tabataStateArray = {
     name: "tabata",
+    id: 0,
     status: "in-queue",
     work,
     rest,
     initialWork,
     initialRest,
     initialRound,
-    round
-  }
+    round,
+    roundType,
+  };
 
   let xyStateArray = {
     name: "XY",
+    id: 0,
     status: "in-queue",
     totalSeconds,
     initialTime,
-    round
-  }
+    round,
+    initialRound,
+  };
 
   useEffect(() => {
     if (countdown) {
@@ -93,7 +106,7 @@ function App() {
     if (tabata) {
       setDataToSend(tabataStateArray);
     }
-    if(xy) {
+    if (xy) {
       setDataToSend(xyStateArray);
     }
     return () => {};
@@ -147,7 +160,13 @@ function App() {
               </NeonButton>
             </Link>
 
-            <NeonButton onClick={returnToMenu} className="PauseButton">
+            <NeonButton
+              onClick={() => {
+                setDefaultState();
+                returnToMenu();
+              }}
+              className="PauseButton"
+            >
               <NeonParagraph color="white" size="8px">
                 Back
               </NeonParagraph>

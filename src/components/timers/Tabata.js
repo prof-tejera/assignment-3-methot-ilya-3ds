@@ -15,7 +15,7 @@ const Tabata = (props) => {
   const { initialRest, setInitialRest } = useContext(TimerContext);
   const { initialRound, setInitialRound} = useContext(TimerContext);
   const { round, setRound } = useContext(TimerContext);
-  const {totalSeconds, setTotalSeconds} = useContext(TimerContext);
+  const { roundType, setRoundType } = useContext(TimerContext);
 
   const [isActive, setIsActive] = useState(false);
 
@@ -25,12 +25,15 @@ const Tabata = (props) => {
     timer.current = setInterval(() => {
       if (isActive) {
         if (work > 0) {
+          setRoundType("work");
           const workSeconds = work - 1;
           setWork(workSeconds);
         } else if (rest > 0) {
+          setRoundType("rest");
           const restSeconds = rest - 1;
           setRest(restSeconds);
         } else if (round > 1) {
+          setRoundType("work");
           const currRound = round - 1;
           setRound(currRound);
           setWork(initialWork);
@@ -48,6 +51,7 @@ const Tabata = (props) => {
 
 
   const start = () => {
+    setInitialRound(round)
     setInitialWork(work);
     setInitialRest(rest);
     setIsActive(true);

@@ -35,16 +35,10 @@ export const TimerProvider = (props) => {
     const [initialRest, setInitialRest] = useState(0);
     const [initialRound, setInitialRound] = useState(1);
     const [round, setRound] = useState(1);
+    const [roundType, setRoundType] = useState("work");
 
-    const convertSecondsToTimer = (ConvertedSeconds) => {
-        setHours(Math.floor(ConvertedSeconds / 3600));
-        const hoursRemainder = ConvertedSeconds % 3600;
-        setMinutes(Math.floor(hoursRemainder / 60));
-        const minutesRemainder = hoursRemainder % 60;
-        setSeconds(Math.floor(minutesRemainder / 1));
-        const secondsRemainder = minutesRemainder % 1;
-        setMilleseconds(Math.floor(secondsRemainder / .01));
-      }
+
+    const [status, setStatus] = useState("")
 
 
     return (
@@ -65,8 +59,8 @@ export const TimerProvider = (props) => {
                 initialRest, setInitialRest,
                 initialRound, setInitialRound,
                 round, setRound,
-                convertSecondsToTimer,
-                setDefaultState
+                setDefaultState,
+                roundType, setRoundType
             }}
         >
             {props.children}
