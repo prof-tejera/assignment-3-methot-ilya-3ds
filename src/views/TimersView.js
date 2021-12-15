@@ -131,54 +131,54 @@ function App() {
     return () => {};
   }, [totalSeconds, round, work, rest, initialTime]);
 
-  const sendDefaultTimers = () => {
-    const obj1 = {
-      name: "stopwatch",
-      id: 0,
-      status: "in-queue",
-      seconds: 3,
-      minutes: 0,
-      hours: 0,
-      totalSeconds: 0,
-      initialTime: 3,
-    };
-    const obj2 = {
-      name: "countdown",
-      id: 1,
-      status: "in-queue",
-      seconds: 3,
-      minutes: 0,
-      hours: 0,
-      totalSeconds: 3,
-    };
+  // const sendDefaultTimers = () => {
+  //   const obj1 = {
+  //     name: "stopwatch",
+  //     id: 0,
+  //     status: "in-queue",
+  //     seconds: 3,
+  //     minutes: 0,
+  //     hours: 0,
+  //     totalSeconds: 0,
+  //     initialTime: 3,
+  //   };
+  //   const obj2 = {
+  //     name: "countdown",
+  //     id: 1,
+  //     status: "in-queue",
+  //     seconds: 3,
+  //     minutes: 0,
+  //     hours: 0,
+  //     totalSeconds: 3,
+  //   };
 
-    const obj3 = {
-      name: "XY",
-      id: 2,
-      status: "in-queue",
-      totalSeconds: 4,
-      round: 1,
-      initialRound: 1,
-    };
-    const obj4 = {
-      name: "stopwatch",
-      id: 3,
-      status: "in-queue",
-      seconds: 6,
-      minutes: 0,
-      hours: 0,
-      totalSeconds: 0,
-      initialTime: 6,
-    };
-    addComponent(obj1);
-    addComponent(obj2);
-    addComponent(obj3);
-    addComponent(obj4);
-  };
+  //   const obj3 = {
+  //     name: "XY",
+  //     id: 2,
+  //     status: "in-queue",
+  //     totalSeconds: 4,
+  //     round: 1,
+  //     initialRound: 1,
+  //   };
+  //   const obj4 = {
+  //     name: "stopwatch",
+  //     id: 3,
+  //     status: "in-queue",
+  //     seconds: 6,
+  //     minutes: 0,
+  //     hours: 0,
+  //     totalSeconds: 0,
+  //     initialTime: 6,
+  //   };
+  //   addComponent(obj1);
+  //   addComponent(obj2);
+  //   addComponent(obj3);
+  //   addComponent(obj4);
+  // };
 
-  useEffect(() => {
-    sendDefaultTimers();
-  },[])
+  // useEffect(() => {
+  //   sendDefaultTimers();
+  // },[])
 
   return (
     <>

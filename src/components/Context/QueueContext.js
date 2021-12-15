@@ -52,7 +52,6 @@ export const QueueProvider = (props) => {
   }, [JSON.stringify(componentArray)]);
 
   useEffect(() => {
-    console.log("something");
   }, [JSON.stringify(queueArray)]);
 
   const addComponent = (Component) => {
@@ -71,8 +70,7 @@ export const QueueProvider = (props) => {
     } else {
       const tempArray = [...queueArray];
       if (tempArray[Index].status === "processing") {
-        clearInterval(timer.current);
-        stopTimers();
+        nextItem();
       }
       tempArray.splice(Index, 1);
       setQueueArray(tempArray);
@@ -126,36 +124,21 @@ export const QueueProvider = (props) => {
   const nextItem = () => {
     switch (currentItem.name) {
       case "stopwatch": {
-        clearInterval(timer.current);
-        setTotalSeconds(currentItem.totalSeconds);
-        setStatus("completed");
-        //startQueue();
+        stopwatchFinished()
         return;
       }
       case "countdown": {
-        clearInterval(timer.current);
-        setTotalSeconds(0);
-        setStatus("completed");
-        startQueue();
+       countdownFinish()
         
         return;
       }
       case "XY": {
-        clearInterval(timer.current);
-        setRound(1);
-        setTotalSeconds(0);
-        setStatus("completed");
-        startQueue();
+        XYFinish()
         
         return;
       }
       case "tabata": {
-        clearInterval(timer.current);
-        setRoundType("rest");
-        setTotalSeconds(0);
-        setRound(1);
-        setStatus("completed");
-        startQueue();
+       tabataFinish()
         
         return;
       }
@@ -545,8 +528,8 @@ export const QueueProvider = (props) => {
   };
 
   const stopwatchFinished = () => {
-    setStartStopwatch(false);
     clearInterval(timer.current);
+    setStartStopwatch(false);
     setStatus("completed");
     setTotalSeconds(0);
     setInitialTime(0);
