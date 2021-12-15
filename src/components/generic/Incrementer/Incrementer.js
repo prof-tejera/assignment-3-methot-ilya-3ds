@@ -4,6 +4,8 @@ import FlexRow from "../FlexDivs/FlexRow";
 import "./Incrementer.css";
 import PropTypes from "prop-types";
 import "../Input/Input.css";
+import NeonButton from "../Button/NeonButtons";
+import NeonParagraph from "../Paragraph/NeonParagraph";
 
 const Incrementer = (props) => {
   const changeTime = (direction, maxMin) => {
@@ -52,32 +54,38 @@ const Incrementer = (props) => {
             ^
           </Button>
         </FlexRow>
-        <FlexRow width="auto" height="auto" centered="true">
-          <input
-            style={{
-              boxSizing: "border-box",
-              textAlign: "center",
-              width: props.width,
-              height: props.height,
-              cursor: "auto",
-              borderRadius: "30px",
-              fontSize: "auto",
-            }}
-            value={props.value}
-            onChange={(e) => {
-              const value = e.target.value;
-              if (!isNaN(+value)) {
-                if (
-                  +value <= props.max &&
-                  +value >= props.min
-                ) {
-                  props.onChange(e.target.value);
-                }
-              }
-            }}
+        <FlexRow padding={props.padding} width="auto" height="auto" centered="true">
+          <NeonButton  
+            height={props.height * 3}
+            width={props.width * 5}
+            disabled="true"
             className="display"
-          ></input> 
-          
+            padding="5px"
+          >
+            <input
+              style={{
+                background: "none",
+                color: "white",
+                boxSizing: "border-box",
+                textAlign: "center",
+                width: props.width,
+                height: props.height,
+                cursor: "auto",
+                borderRadius: "30px",
+                fontSize: "auto",
+              }}
+              value={props.value}
+              onChange={(e) => {
+                const value = e.target.value;
+                if (!isNaN(+value)) {
+                  if (+value <= props.max && +value >= props.min) {
+                    props.onChange(e.target.value);
+                  }
+                }
+              }}
+            ></input>
+            <NeonParagraph color="white" padding="0px" size=".1">{props.scale}</NeonParagraph>
+          </NeonButton>
         </FlexRow>
         <FlexRow width="auto" height="auto" spaceEvenly="true" centered="true">
           <Button
@@ -96,8 +104,8 @@ const Incrementer = (props) => {
 
 Incrementer.propTypes = {
   color: PropTypes.string,
-  width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  width: PropTypes.number,
+  height: PropTypes.number,
   max: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   min: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   addZeros: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),

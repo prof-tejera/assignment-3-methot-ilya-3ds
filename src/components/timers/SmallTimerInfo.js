@@ -59,6 +59,7 @@ const SmallTimerInfo = (props) => {
             </NeonParagraph>
           </FlexColumn>
         </SimpleBackground>
+        {props.status !== "processing" &&
         <NeonButton
           onClick={() => {
             removeComponent(props.index);
@@ -70,7 +71,7 @@ const SmallTimerInfo = (props) => {
           className="ClearButton"
         >
           X
-        </NeonButton>
+        </NeonButton>}
       </FlexColumn>
     </>
   );

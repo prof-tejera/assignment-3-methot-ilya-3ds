@@ -47,7 +47,7 @@ const Stopwatch = (props) => {
             Stopwatch
           </NeonParagraph>
         </FlexRow>
-        <FlexRow height="25%" spaceEvenly="true" width="auto" centered="true">
+        <FlexRow height="75%" spaceEvenly="true" width="auto" centered="true">
           <FlexRow
             height="25%"
             padding="10px"
@@ -56,21 +56,21 @@ const Stopwatch = (props) => {
             width="100%"
           >
             <Incrementer
-              width="30px"
+              width="100px"
               height="30px"
               max="60"
               min="0"
-              scale="m"
+              scale="Minutes"
               addZeros={2}
               value={minutes}
               onChange={setMinutes}
             />
             <Incrementer
-              width="30px"
+              width="100px"
               height="30px"
               max="60"
               min="0"
-              scale="s"
+              scale="Seconds"
               addZeros={2}
               value={seconds}
               onChange={setSeconds}

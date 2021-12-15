@@ -15,7 +15,8 @@ const NeonButton = props => {
             cursor: props.disabled && "auto",
             borderRadius: "30px",
             fontSize: props.fontSize,
-            margin: props.margin
+            margin: props.margin,
+            padding: props.padding
           }
         }
         className={props.className}
@@ -36,11 +37,16 @@ NeonButton.propTypes = {
     PropTypes.string,
     PropTypes.number
   ]),
+  
   height: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.number
   ]),
   margin: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number
+  ]),
+  padding: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.number
   ]),
@@ -53,7 +59,8 @@ NeonButton.defaultProps = {
   height: "50px",
   className: "StartButton",
   disabled: false,
-  margin: "2px"
+  margin: "2px",
+  padding: "2px"
 }
 
 

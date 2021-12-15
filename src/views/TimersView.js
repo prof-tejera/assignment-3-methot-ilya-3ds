@@ -100,7 +100,7 @@ function App() {
     rest,
     initialWork,
     initialRest,
-    initialRound,
+    initialRound: round,
     round,
     roundType,
     totalSeconds,
@@ -112,7 +112,7 @@ function App() {
     status: "in-queue",
     totalSeconds,
     round,
-    initialRound,
+    initialRound: round,
   };
 
   useEffect(() => {
@@ -182,7 +182,7 @@ function App() {
 
   return (
     <>
-      <FlexRow>
+      <FlexRow spaceEvenly="false">
         <FlexColumn>
           {menu && (
             <Background>
@@ -217,7 +217,8 @@ function App() {
           {tabata && <Tabata></Tabata>}
         </FlexColumn>
         {!menu && (
-          <FlexColumn height="300px">
+          <FlexColumn width="100px" height="300px">
+            {(totalSeconds > 0 || initialTime > 0) &&
             <Link to="/">
               <NeonButton
                 onClick={() => {
@@ -230,7 +231,7 @@ function App() {
                   Add
                 </NeonParagraph>
               </NeonButton>
-            </Link>
+            </Link>}
 
             <NeonButton
               onClick={() => {

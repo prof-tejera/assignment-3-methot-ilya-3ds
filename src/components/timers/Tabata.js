@@ -13,10 +13,10 @@ const Tabata = (props) => {
   const { rest, setRest } = useContext(TimerContext);
   const { initialWork, setInitialWork } = useContext(TimerContext);
   const { initialRest, setInitialRest } = useContext(TimerContext);
-  const { initialRound, setInitialRound} = useContext(TimerContext);
+  const { initialRound, setInitialRound } = useContext(TimerContext);
   const { round, setRound } = useContext(TimerContext);
   const { roundType, setRoundType } = useContext(TimerContext);
-  const { totalSeconds, setTotalSeconds} = useContext(TimerContext);
+  const { totalSeconds, setTotalSeconds } = useContext(TimerContext);
 
   const [isActive, setIsActive] = useState(false);
 
@@ -42,7 +42,7 @@ const Tabata = (props) => {
           setWork(initialWork);
           setRest(initialRest);
           setTotalSeconds(work);
-        } 
+        }
       }
     }, 1000);
 
@@ -54,13 +54,12 @@ const Tabata = (props) => {
   useEffect(() => {
     setRound(round);
     setInitialRound(round);
-    if(work > 0) {
+    if (work > 0) {
       setTotalSeconds(work);
-    }
-    else{
+    } else {
       setTotalSeconds(rest);
     }
-  },[work, rest, round])
+  }, [work, rest, round]);
 
   return (
     <>
@@ -69,48 +68,62 @@ const Tabata = (props) => {
           Tabata
         </NeonParagraph>
 
-    <FlexColumn>
-        <NeonParagraph padding="10px" height="10%" color="#00C0F9" size="18px">
-          Round
-        </NeonParagraph>
-        <Incrementer
-          value={round}
-          onChange={setRound}
-          padding="10px"
-          width="30px"
-          height="auto"
-          max="60"
-          min="1"
-        />
+        <FlexColumn>
+          <NeonParagraph
+            padding="10px"
+            height="10%"
+            color="#00C0F9"
+            size="18px"
+          >
+            Round
+          </NeonParagraph>
+          <Incrementer
+            value={round}
+            onChange={setRound}
+            padding="10px"
+            width="30px"
+            height="auto"
+            max="60"
+            min="1"
+          />
         </FlexColumn>
 
-        <FlexRow width="100%" height="20%" padding="10px">
-          <NeonParagraph margin="10px" color="#00C0F9" size="14px">
-            Work
-          </NeonParagraph>
-          <Incrementer
-            value={work}
-            onChange={setWork}
-            width="50px"
-            height="auto"
-            max="60"
-            min="0"
-            scale="s"
-            addZeros="2"
-          />
-          <Incrementer
-            value={rest}
-            onChange={setRest}
-            width="50px"
-            height="auto"
-            max="60"
-            min="0"
-            scale="s"
-            addZeros="2"
-          />
-          <NeonParagraph padding="10px" color="#00C0F9" size="14px">
-            Rest
-          </NeonParagraph>
+        <FlexRow width="100%" height="50%" padding="10px">
+          <FlexColumn>
+            <NeonParagraph
+              color="#00C0F9"
+              size="14px"
+            >
+              Work
+            </NeonParagraph>
+            <Incrementer
+              padding="5px"
+              value={work}
+              onChange={setWork}
+              width="60px"
+              height="auto"
+              max="60"
+              min="0"
+              scale="Seconds"
+              addZeros="2"
+            />
+          </FlexColumn>
+          <FlexColumn centered="true">
+            <NeonParagraph color="#00C0F9" size="14px">
+              Rest
+            </NeonParagraph>
+            <Incrementer
+              padding="5px"
+              value={rest}
+              onChange={setRest}
+              width="60px"
+              height="auto"
+              max="60"
+              min="0"
+              scale="Seconds"
+              addZeros="2"
+            />
+          </FlexColumn>
         </FlexRow>
       </Background>
     </>

@@ -2,7 +2,7 @@
   "name": "assignment-3",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://prof-tejera.github.io/assignment-2-methot-ilya-3ds",
+  "homepage": "http://prof-tejera.github.io/assignment-3-methot-ilya-3ds",
   "dependencies": {
     "prop-types": "^15.7.2",
     "react": "^17.0.2",

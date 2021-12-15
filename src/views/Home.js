@@ -39,7 +39,7 @@ useEffect(()=> {
 
   return (
     <FlexColumn>
-      <NeonParagraph> Timers In Queue</NeonParagraph>
+      {(componentArray.length > 0) && <NeonParagraph> Timers In Queue</NeonParagraph>}
       <FlexRow height="auto">
         {currArray.map((timer, i) => {
           if (timer.name === "countdown") {
@@ -98,7 +98,7 @@ useEffect(()=> {
         </FlexColumn>}
       </FlexRow>
       <FlexRow>
-       {!useArrayQueue && <NeonButton
+       {(!useArrayQueue && (componentArray.length > 0)) && <NeonButton
           onClick={() => {
             setQueueArray(JSON.parse(JSON.stringify(componentArray)));
             setUseArrayQueue(true);

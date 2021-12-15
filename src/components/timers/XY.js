@@ -46,7 +46,6 @@ const XY = (props) => {
   }, [isActive, totalSeconds]);
 
   useEffect(() => {
-    setInitialRound(round);
     setRound(round);
     setTotalSeconds(convertTimerToSeconds());
 
