@@ -1,0 +1,6 @@
+Since I am designing my new apartment and was looking at Neon lights, I wanted to try putting together a neon theme for the buttons.
+
+
+https://css-tricks.com/how-to-create-neon-text-with-css/
+
+https://redstapler.co/3d-infinity-effect-css-tutorial/
