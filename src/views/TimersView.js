@@ -182,7 +182,7 @@ function App() {
 
   return (
     <>
-      <FlexRow spaceEvenly="false">
+      <FlexRow width="500px">
         <FlexColumn>
           {menu && (
             <Background>
