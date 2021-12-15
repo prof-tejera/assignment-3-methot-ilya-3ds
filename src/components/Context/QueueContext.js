@@ -22,6 +22,7 @@ export const QueueProvider = (props) => {
   const [startStopwatch, setStartStopwatch] = useState(false);
 
   // Timer info
+  const [name, setName] = useState("timer");
   const [seconds, setSeconds] = useState(0);
   const [minutes, setMinutes] = useState(0);
   const [totalSeconds, setTotalSeconds] = useState(0);
@@ -39,6 +40,9 @@ export const QueueProvider = (props) => {
   const [currID, setCurrID] = useState(0);
 
   let timer = useRef(null);
+  const [currentItem, setCurrentItem] = useState({});
+  const [savedInfo, setSavedInfo] = useState({});
+  const [allowUpdate, setAllowUpdate] = useState(true);
 
   // Queue Methods
 
@@ -78,44 +82,88 @@ export const QueueProvider = (props) => {
 
   const updateItem = (Index) => {
     let placeholderArray = [...queueArray];
-    placeholderArray.map((timer) => {
-      if (timer.id === Index) {
-        switch (timer.name) {
-          case "countdown": {
-            timer.status = status;
-            timer.totalSeconds = totalSeconds;
-            return timer;
-          }
-          case "tabata": {
-            timer.status = status;
-            timer.totalSeconds = totalSeconds;
-            timer.round = round;
-            timer.initialRound = initialRound;
-            timer.roundType = roundType;
-            return timer;
-          }
-          case "XY": {
-            timer.status = status;
-            timer.totalSeconds = totalSeconds;
-            timer.initialTime = initialTime;
-            timer.round = round;
-            return timer;
-          }
-          case "stopwatch": {
-            timer.status = status;
-            timer.totalSeconds = totalSeconds;
-            timer.initialTime = initialTime;
-            timer.round = round;
-            return timer;
-          }
-          default: {
-            return timer;
+    if (allowUpdate) {
+      placeholderArray.map((timer) => {
+        if (timer.id === Index) {
+          switch (timer.name) {
+            case "countdown": {
+              timer.status = status;
+              timer.totalSeconds = totalSeconds;
+              return timer;
+            }
+            case "tabata": {
+              timer.status = status;
+              timer.totalSeconds = totalSeconds;
+              timer.round = round;
+              timer.initialRound = initialRound;
+              timer.roundType = roundType;
+              return timer;
+            }
+            case "XY": {
+              timer.status = status;
+              timer.totalSeconds = totalSeconds;
+              timer.initialTime = initialTime;
+              timer.round = round;
+              return timer;
+            }
+            case "stopwatch": {
+              timer.status = status;
+              timer.totalSeconds = totalSeconds;
+              timer.initialTime = initialTime;
+              timer.round = round;
+              return timer;
+            }
+            default: {
+              return timer;
+            }
           }
         }
-      }
-    });
-    setQueueArray(placeholderArray);
+      });
+      setQueueArray(placeholderArray);
+    }
   };
+
+  const nextItem = () => {
+    switch (currentItem.name) {
+      case "stopwatch": {
+        clearInterval(timer.current);
+        setTotalSeconds(currentItem.totalSeconds);
+        setStatus("completed");
+        //startQueue();
+        return;
+      }
+      case "countdown": {
+        clearInterval(timer.current);
+        setTotalSeconds(0);
+        setStatus("completed");
+        startQueue();
+        
+        return;
+      }
+      case "XY": {
+        clearInterval(timer.current);
+        setRound(1);
+        setTotalSeconds(0);
+        setStatus("completed");
+        startQueue();
+        
+        return;
+      }
+      case "tabata": {
+        clearInterval(timer.current);
+        setRoundType("rest");
+        setTotalSeconds(0);
+        setRound(1);
+        setStatus("completed");
+        startQueue();
+        
+        return;
+      }
+      default: {
+        return;
+      }
+    }
+  }
 
   const startQueue = async () => {
     for (let i = 0; i < queueArray.length; i++) {
@@ -128,6 +176,8 @@ export const QueueProvider = (props) => {
             return;
           }
           case "countdown": {
+            setCurrentItem(currItem);
+            setName("countdown");
             setSeconds(currItem.seconds);
             setMinutes(currItem.minutes);
             setTotalSeconds(currItem.totalSeconds);
@@ -138,6 +188,8 @@ export const QueueProvider = (props) => {
             return;
           }
           case "tabata": {
+            setCurrentItem(currItem);
+            setName("tabata");
             setWork(currItem.work);
             setRest(currItem.rest);
             setRound(currItem.round);
@@ -150,6 +202,8 @@ export const QueueProvider = (props) => {
             return;
           }
           case "XY": {
+            setCurrentItem(currItem);
+            setName("XY");
             setInitialTime(currItem.totalSeconds);
             setTotalSeconds(currItem.totalSeconds);
             setRound(currItem.round);
@@ -160,6 +214,8 @@ export const QueueProvider = (props) => {
             return;
           }
           case "stopwatch": {
+            setCurrentItem(currItem);
+            setName("stopwatch");
             setSeconds(currItem.seconds);
             setMinutes(currItem.minutes);
             setTotalSeconds(currItem.totalSeconds);
@@ -178,7 +234,7 @@ export const QueueProvider = (props) => {
 
   // Timer Methods
 
-  // Helper Methods
+  // Timer Helper Methods
   const convertTimerToSeconds = () => {
     const totalSeconds = minutes * 60 + seconds;
     return totalSeconds;
@@ -191,6 +247,7 @@ export const QueueProvider = (props) => {
   };
 
   const stopTimers = () => {
+    setAllowUpdate(true);
     countdownStop();
     tabataStop();
     XYStop();
@@ -198,10 +255,88 @@ export const QueueProvider = (props) => {
   };
 
   const pauseTimers = () => {
+    setAllowUpdate(false);
+
     setStartCountdown(false);
     setStartTabata(false);
     setStartXY(false);
     setStartStopwatch(false);
+
+    let savedObj = {
+      name: name,
+      seconds: seconds,
+      minutes: minutes,
+      totalSeconds: totalSeconds,
+      initialTime: initialTime,
+      work: work,
+      rest: rest,
+      initialWork: initialWork,
+      initialRest: initialRest,
+      initialRound: initialRound,
+      round: round,
+      roundType: roundType,
+    };
+
+    setSavedInfo(savedObj);
+
+    resetState();
+  };
+
+  const resetState = () => {
+    setName(undefined);
+    setSeconds(undefined);
+    setMinutes(undefined);
+    setTotalSeconds(undefined);
+    setInitialTime(undefined);
+    setWork(undefined);
+    setRest(undefined);
+    setInitialWork(undefined);
+    setInitialRest(undefined);
+    setInitialRound(undefined);
+    setRound(undefined);
+    setRoundType(undefined);
+  };
+
+  const resumeState = (obj) => {
+    setName(obj.name);
+    setSeconds(obj.seconds);
+    setMinutes(obj.minutes);
+    setTotalSeconds(obj.totalSeconds);
+    setInitialTime(obj.initialTime);
+    setWork(obj.work);
+    setRest(obj.rest);
+    setInitialWork(obj.initialWork);
+    setInitialRest(obj.initialRest);
+    setInitialRound(obj.initialRound);
+    setRound(obj.round);
+    setRoundType(obj.roundType);
+  };
+
+  const resumeTimers = () => {
+    setAllowUpdate(true);
+    resumeState(savedInfo);
+
+    switch (savedInfo.name) {
+      default: {
+        return;
+      }
+      case "countdown": {
+        setStartCountdown(true);
+        return;
+      }
+      case "tabata": {
+        setStartTabata(true);
+        return;
+      }
+      case "XY": {
+        setStartXY(true);
+        return;
+      }
+      case "stopwatch": {
+        setStartStopwatch(true);
+        return;
+      }
+    }
   };
 
   useEffect(() => {
@@ -347,7 +482,7 @@ export const QueueProvider = (props) => {
             setRound(currRound);
             setTotalSeconds(initialTime);
           } else {
-            XYStop();
+            XYFinish();
           }
         }
       }, 1000);
@@ -367,7 +502,14 @@ export const QueueProvider = (props) => {
     clearInterval(timer.current);
     setTotalSeconds(0);
     setStartXY(false);
+  };
+
+  const XYFinish = () => {
+    clearInterval(timer.current);
+    setStartTabata(false);
     setStatus("completed");
+    setInitialRound(0);
+    setInitialTime(0);
   };
 
   // Stopwatch
@@ -379,9 +521,8 @@ export const QueueProvider = (props) => {
           const seconds = totalSeconds + 1;
           setTotalSeconds(seconds);
           convertSecondsToTimer(seconds);
-        }
-        else {
-          stopwatchStop();
+        } else {
+          stopwatchFinished();
         }
       }, 1000);
 
@@ -397,6 +538,13 @@ export const QueueProvider = (props) => {
   };
 
   const stopwatchStop = () => {
+    setStartStopwatch(false);
+    clearInterval(timer.current);
+    setTotalSeconds(0);
+    setInitialTime(0);
+  };
+
+  const stopwatchFinished = () => {
     setStartStopwatch(false);
     clearInterval(timer.current);
     setStatus("completed");
@@ -417,6 +565,9 @@ export const QueueProvider = (props) => {
         stopTimers,
         setQueueArray,
         setQueueActive,
+        pauseTimers,
+        resumeTimers,
+        nextItem
       }}
     >
       {props.children}

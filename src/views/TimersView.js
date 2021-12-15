@@ -103,7 +103,7 @@ function App() {
     initialRound,
     round,
     roundType,
-    totalSeconds
+    totalSeconds,
   };
 
   let xyStateArray = {
@@ -131,6 +131,55 @@ function App() {
     return () => {};
   }, [totalSeconds, round, work, rest, initialTime]);
 
+  const sendDefaultTimers = () => {
+    const obj1 = {
+      name: "stopwatch",
+      id: 0,
+      status: "in-queue",
+      seconds: 3,
+      minutes: 0,
+      hours: 0,
+      totalSeconds: 0,
+      initialTime: 3,
+    };
+    const obj2 = {
+      name: "countdown",
+      id: 1,
+      status: "in-queue",
+      seconds: 3,
+      minutes: 0,
+      hours: 0,
+      totalSeconds: 3,
+    };
+
+    const obj3 = {
+      name: "XY",
+      id: 2,
+      status: "in-queue",
+      totalSeconds: 4,
+      round: 1,
+      initialRound: 1,
+    };
+    const obj4 = {
+      name: "stopwatch",
+      id: 3,
+      status: "in-queue",
+      seconds: 6,
+      minutes: 0,
+      hours: 0,
+      totalSeconds: 0,
+      initialTime: 6,
+    };
+    addComponent(obj1);
+    addComponent(obj2);
+    addComponent(obj3);
+    addComponent(obj4);
+  };
+
+  useEffect(() => {
+    sendDefaultTimers();
+  },[])
+
   return (
     <>
       <FlexRow>
@@ -140,7 +189,7 @@ function App() {
               <NeonParagraph color="red">Choose Timer</NeonParagraph>
               <FlexColumn width="100%" centered="true">
                 <FlexRow width="100%" height="40%">
-                <FlexColumn>
+                  <FlexColumn>
                     <NeonParagraph color="white">XY</NeonParagraph>
                     <NeonButton onClick={toggleXY}>O</NeonButton>
                   </FlexColumn>

@@ -29,7 +29,7 @@ const FlexRow = props => {
           boxSizing: "border-box",
           justifyContent: props.spaceEvenly ? styles.spaceEvenly.justifyContent : styles.centered.justifyContent
         }}
-        className="Flex-Column"
+        className="Flex-Row"
       >
         {props.children}
       </div>

@@ -10,10 +10,11 @@ import { QueueProvider } from "../components/Context/QueueContext";
 
 const Home = () => {
   const { componentArray, queueArray, setQueueArray, setQueueActive } = useContext(QueueContext);
-  const { startQueue, stopTimers } = useContext(QueueContext);
+  const { startQueue, stopTimers, pauseTimers, resumeTimers, nextItem } = useContext(QueueContext);
   const [currArray, setCurrArray] = useState(componentArray);
 
   const [useArrayQueue, setUseArrayQueue] = useState(false);
+  const [isPaused, setIsPaused] = useState(false);
 
   useEffect(() => {
       if(useArrayQueue) {
@@ -32,10 +33,14 @@ const Home = () => {
     }
 }, [currArray]);
 
+useEffect(()=> {
+
+},[isPaused]);
+
   return (
     <FlexColumn>
       <NeonParagraph> Timers In Queue</NeonParagraph>
-      <FlexRow height="200px">
+      <FlexRow height="auto">
         {currArray.map((timer, i) => {
           if (timer.name === "countdown") {
             return (
@@ -104,9 +109,10 @@ const Home = () => {
         >
           Start
         </NeonButton>}
-        {useArrayQueue && <NeonButton
+        {(useArrayQueue && !isPaused) && <NeonButton
           onClick={() => {
-            stopTimers();
+            pauseTimers();
+            setIsPaused(true);
           }}
           className="PauseButton"
           width="20vw"
@@ -114,10 +120,34 @@ const Home = () => {
         >
           Pause
         </NeonButton>}
+        
+        {(useArrayQueue && isPaused) && <NeonButton
+          onClick={() => {
+            resumeTimers();
+            setIsPaused(false);
+          }}
+          className="StartButton"
+          width="20vw"
+          margin="10px"
+        >
+          Resume
+        </NeonButton>}
         {useArrayQueue && <NeonButton
           onClick={() => {
+            nextItem();
+          }}
+          className="RestartButton"
+          width="10vw"
+          margin="10px"
+        >
+          Skip
+        </NeonButton>}
+        {useArrayQueue && <NeonButton
+          onClick={() => {
+            setIsPaused(false);
             stopTimers();
             setUseArrayQueue(false);
+            
           }}
           className="ClearButton"
           width="20vw"
